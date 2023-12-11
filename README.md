@@ -1,1 +1,8 @@
-# ModuleTemplate
+# StoreCX
+
+.env:
+
+SESSIONCX_CONNECTION_STRING = "mongodb://"
+SESSIONCX_DATABASE = ""
+SESSIONCX_COLLECTION = ""
+STORECX_SECRET=""

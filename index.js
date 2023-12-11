@@ -1,3 +1,3 @@
-const {DefaultModule} = require("./modules/default");
+const {StoreCX} = require("./modules/StoreCX");
 
-module.exports = {DefaultModule}
+module.exports = {StoreCX}

@@ -1,1 +1,1 @@
-const {DefaultModule} = require("../index.js");
+const {StoreCX} = require("../index.js"); 

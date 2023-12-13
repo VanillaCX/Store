@@ -3,7 +3,7 @@ require('dotenv').config();
 const expressSession = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(expressSession);
 
-const environment = process.env.NODE_ENV;
+const environment = process.env.VANILLA_ENV || "production";
 
 const store = new MongoDBStore({
     uri: process.env.SESSIONCX_CONNECTION_STRING, 

@@ -5,8 +5,15 @@ const MongoDBStore = require('connect-mongodb-session')(expressSession);
 
 class StoreCX {
     constructor(req, store){
+        // Create new store
+        if(!req.session[store]){
+            req.session[store] = {};
+        }
+        
         this.req = req;
         this.session = this.req.session[store];
+
+        
     }
 
     async set(key, value) {
@@ -14,7 +21,7 @@ class StoreCX {
         await StoreCX.save(this.req);
     }
 
-    async get(key) {
+    get(key) {
         return this.session[key];
     }
 
@@ -74,6 +81,22 @@ class StoreCX {
         })
 
         return promise;
+    }
+
+    static async killSession(req){
+        const promise = new Promise((resolve, reject) => {
+            if(!req.session){
+                reject(new Error("NO_SESSION"))
+            } else {
+                req.session.destroy((error) => {
+                    if (error) {
+                        reject(error)
+                    } else {
+                        resolve();
+                    }
+                })
+            }
+        })
     }
 
     /**

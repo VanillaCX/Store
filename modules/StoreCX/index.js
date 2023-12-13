@@ -34,8 +34,6 @@ if(environment === "production"){
     sessionOptions.cookie.domain = process.env.STORECX_COOKIEDOMAIN;
 }
 
-const storeOptions = 
-
 class StoreCX {
     constructor(req, store){
         // Create new store

@@ -5,6 +5,17 @@ const MongoDBStore = require('connect-mongodb-session')(expressSession);
 
 const environment = process.env.NODE_ENV;
 
+const store = new MongoDBStore({
+    uri: process.env.SESSIONCX_CONNECTION_STRING, 
+    databaseName: process.env.SESSIONCX_DATABASE,
+    collection: process.env.SESSIONCX_COLLECTION,
+    
+    // Change the expires key name
+    expiresKey: `_ts`,
+    // This controls the life of the document - set to same value as expires / 1000
+    expiresAfterSeconds: 60 * 60 * 24 * 14 
+})
+
 const sessionOptions = {
     secret: process.env.STORECX_SECRET,
     cookie: {
@@ -12,7 +23,7 @@ const sessionOptions = {
         httpOnly: true,
         secure: false
     },
-    store: StoreCX.store,
+    store: store,
     saveUninitialized: false,
     resave: false,
     
@@ -23,16 +34,7 @@ if(environment === "production"){
     sessionOptions.cookie.domain = process.env.STORECX_COOKIEDOMAIN;
 }
 
-const storeOptions = {
-    uri: process.env.SESSIONCX_CONNECTION_STRING, 
-    databaseName: process.env.SESSIONCX_DATABASE,
-    collection: process.env.SESSIONCX_COLLECTION,
-    
-    // Change the expires key name
-    expiresKey: `_ts`,
-    // This controls the life of the document - set to same value as expires / 1000
-    expiresAfterSeconds: 60 * 60 * 24 * 14 
-}
+const storeOptions = 
 
 class StoreCX {
     constructor(req, store){
@@ -54,7 +56,6 @@ class StoreCX {
         return this.session[key];
     }
 
-    static store = new MongoDBStore(storeOptions)
     static session = expressSession(sessionOptions)
 
     static async save(req){

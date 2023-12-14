@@ -26,7 +26,7 @@ const sessionOptions = {
     store: store,
     saveUninitialized: true,
     resave: false,
-    
+    credentials: 'include'
 }
 
 /*if(environment === "production"){

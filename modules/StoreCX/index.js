@@ -6,9 +6,9 @@ const MongoDBStore = require('connect-mongodb-session')(expressSession);
 const environment = process.env.VANILLA_ENV || "production";
 
 const store = new MongoDBStore({
-    uri: process.env.SESSIONCX_CONNECTION_STRING, 
-    databaseName: process.env.SESSIONCX_DATABASE,
-    collection: process.env.SESSIONCX_COLLECTION,
+    uri: process.env.COSMOS_CONNECTION_STRING, 
+    databaseName: process.env.SESSION_DATABASE,
+    collection: process.env.SESSION_COLLECTION,
     
     // Change the expires key name
     expiresKey: `_ts`,
@@ -17,7 +17,7 @@ const store = new MongoDBStore({
 })
 
 const sessionOptions = {
-    secret: process.env.STORECX_SECRET,
+    secret: process.env.STORE_SECRET,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
         httpOnly: true,
@@ -31,7 +31,7 @@ const sessionOptions = {
 
 if(environment === "production"){
     sessionOptions.cookie.secure = true;
-    sessionOptions.cookie.domain = process.env.STORECX_COOKIEDOMAIN;
+    sessionOptions.cookie.domain = process.env.STORE_COOKIE_DOMAIN;
 }
 
 class StoreCX {

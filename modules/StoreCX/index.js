@@ -21,7 +21,7 @@ const sessionOptions = {
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
         httpOnly: true,
-        secure: false
+        secure: true
     },
     store: store,
     saveUninitialized: false,
@@ -29,10 +29,10 @@ const sessionOptions = {
     
 }
 
-if(environment === "production"){
+/*if(environment === "production"){
     sessionOptions.cookie.secure = true;
     sessionOptions.cookie.domain = process.env.STORE_COOKIE_DOMAIN;
-}
+}*/
 
 class StoreCX {
     constructor(req, store){
